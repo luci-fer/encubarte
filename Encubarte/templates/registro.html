@@ -1,0 +1,120 @@
+{%extends "base.html"%}
+{% block titulo %}Registro{% endblock %}
+{% block contenido %}
+	{%if errorContrasena%}
+	<div class="container">
+		<h3>Corrige los siguientes errores para continuar:</h3>
+		<p class="text-error">
+			{% if errorContrasena %}
+				Las contraseñas no coinciden, verifica por favor.<br>
+			{% endif %}
+		</p>
+	</div>
+	{% endif %}
+
+	{%if conectado%}
+		<form action="/logout/" name="logout">
+			{% csrf_token %}
+			<div class="container">
+				<p>Ya estás registrado y logueado como {{nombreUsuario}}, para crear un nuevo usuario debes cerrar sesión primero</p>
+		        <label>Cerrar sesión:</label>
+		        <input type="submit" value="Log out" name="logout"/>
+		    </div>
+		</form>
+	{%else %}
+		<form method="POST" action="/registro/" name="registro">
+			{% csrf_token %}
+			<div class="container">
+			<h3>Ingresa tus datos</hs3>
+			<table class="table-bordered table-striped table-hover">
+				<tbody>
+					<tr>
+				        <td><label>Numero Documento:</label></td>
+				        <td><input type="text" name="numeroDocumento" required="true" pattern="[0-9]{5,20}" value="{{numeroDocumento}}"/>*</td>
+				    </tr>
+				    <tr>
+				        <td><label>Tipo de Documento:</label></td>
+				        <td>
+				        	<select name="tipoDocumento" value="{{tipoDocumento}}">
+				        		{% for t in  tiposDocumento%}
+				        			<option>{{t}}</option>
+				        		{% endfor %}
+				        	</select>
+				    	</td>
+				    </tr>
+				    <tr>
+				        <td><label>Contraseña:</label></td>
+				        <td><input type="password" name="contrasena" required="true"/>*</td>
+				    </tr>
+				    <tr>
+				        <td><label>Repita su Contraseña:</label></td>
+				        <td><input type="password" name="contrasena2" required="true"/>*</td>
+				    </tr>
+				    <tr>
+				        <td><label>Correo Electronico:</label></td>
+				        <td><input type="email" name="email" required="true" value="{{correoElectronico}}"/>*</td>
+				    </tr>
+				    <tr>
+				        <td><label>Nombres:</label></td>
+				        <td><input type="text" name="nombres" required="true" value="{{nombres}}"/>*</td>
+				    </tr>
+				    <tr>
+				        <td><label>Apellidos:</label></td>
+				        <td><input type="text" name="apellidos" required="true" value="{{apellidos}}"/>*</td>
+				    </tr>
+				    <tr>
+				        <td><label>Fecha de nacimiento:</label></td>
+				        <td><input type="date" name="fechaNacimiento" required="true" value="{{fechaNacimiento}}"/>*</td>
+				    </tr>
+				    <tr>
+				        <td><label>Género:</label></td>
+				        <td>
+				        	<select name="genero" value="{{genero}}">
+				        		{% for g in  generos%}
+				        			<option>{{g}}</option>
+				        		{% endfor %}
+				        	</select>
+				    	</td>
+				    </tr>
+				    <tr>
+				        <td><label>Dirección:</label></td>
+				        <td><input type="text" name="direccion" required="true" value="{{direccion}}"/>*</td>
+				    </tr>
+				    <tr>
+				        <td><label>Barrio:</label></td>
+				        <td><input type="text" name="barrio" required="true" value="{{barrio}}"/>*</td>
+				    </tr>
+				    <tr>
+				        <td><label>Comuna:</label></td>
+				        <td><input type="text" name="comuna" required="true" value="{{comuna}}"/>*</td>
+				    </tr>
+				    <tr>
+				        <td><label>Dirección:</label></td>
+				        <td><input type="text" name="direccion" required="true" value="{{direccion}}"/>*</td>
+				    </tr>
+				    <tr>
+				        <td><label>Telefonos:</label></td>
+				        <td><input type="text" name="telefonos" required="true" pattern="[0-9]{7,12}" value="{{telefonos}}"/>*</td>
+				    </tr>
+				    <tr>
+				        <td><label>Grupo etnico:</label></td>
+				        <td><input type="text" name="grupoEtnico" required="true" value="{{grupoEtnico}}"/>*</td>
+				    </tr>
+				    <tr>
+				        <td><label>Condicion:</label></td>
+				        <td><input type="text" name="condicion" required="true" value="{{condicion}}"/>*</td>
+				    </tr>
+				    <tr>
+				        <td><label>Seguridad social:</label></td>
+				        <td><input type="text" name="seguridadSocial" required="true" value="{{seguridadSocial}}"/>*</td>
+				    </tr>
+				    <tr>
+				        <td><input type="submit" value="Regístrate" name="registrar"/>
+				    </tr>
+				</tbody>
+			</table>
+			<p class="text-info"><h5>Por favor ingrese todos los campos requeridos (*)</h5></p>
+			</div>
+		</form>
+	{%endif %}
+{% endblock %}

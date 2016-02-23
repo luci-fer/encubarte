@@ -1,0 +1,58 @@
+{%extends "base.html"%}
+{% block titulo %}Inicio{% endblock %}
+{% block contenido %}
+	<div class="container-fluid offset1">
+		<div class="span3">
+			<h2>Misión</h2>
+			<p align="justify">Info</p>
+		</div>
+		<div class="span3">
+			<h2>Visión</h2>
+			<p align="justify">Info</p>
+		</div>
+		<div class="span3">
+			<h2>Quienes somos?</h2>
+			<p align="justify">Info</p>
+		</div>
+		<div class="span3">
+			{% if registerSuccess %}
+				<p class="text-info">Registro exitoso! Puedes iniciar sesión.</p>
+			{% endif %}
+			{%if conectado%}
+				<form action="/logout/" name="logout">
+					{% csrf_token %}
+						<h3>Inicio de Sesión</h3>
+						<div>
+							<p>Estás logueado como {{nombre}}, quieres iniciar sesión como alguien más?</p>
+					        <label>Cerrar sesión:</label>
+					        <input type="submit" value="Log out" name="logout"/>
+					    </div>
+				</form>
+			{%else %}
+				<form method="POST" action="/login/" name="login">
+					{% csrf_token %}
+						<h3>Inicio de Sesión</h3>
+						<table class ="table-hover">
+							<tbody>
+								<tr>
+							        <td><label>Nombre de usuario o correo:</label></td>
+							        <td><input type="text" name="username" required="true" value="{{username}}"/></td>
+							    </tr>
+							    <tr>
+							        <td><label>Contraseña:</label></td>
+							        <td><input type="password" name="password" required="true"/></td>
+							    </tr>
+						    </tbody>
+						</table>
+					    <div>
+					        <input type="submit" value="Entrar" name="login"/>
+					    </div>
+					    {%if loginFailed%}
+							<p class="text-error">El nombre de usuario (o correo) y la contraseña no coinciden</p>
+						{%endif%}
+				</form>
+			{%endif %}
+		</div>
+	</div>
+{% endblock %}
+

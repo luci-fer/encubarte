@@ -1,0 +1,39 @@
+</body>
+</html lang="es">
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>{% block titulo %}Inicio{% endblock %}</title>
+		{%block css%}
+		<link rel="stylesheet" type="text/css" href="/media/css/estilos.css"/>
+		{% endblock%}
+		{% block bootstrap %}
+			<link rel="stylesheet" href="/media/bootstrap/css/bootstrap.min.css">
+			<script type="text/javascript" src="/media/bootstrap/js/bootstrap.min.js"></script>
+		{% endblock %}
+		{% block scripts %}
+		{% endblock%}
+
+	</head>
+		<center><h1>Encubarte</h1></center><br>	
+	<body>
+		<div class="container">
+			<nav class="navbar navbar-inverse">
+				<li><a class="btn btn-primary" href="/">Inicio</a></li>
+				{% if request.user.is_staff %}
+					<li><a class="btn btn-info" href="/vehiculos/historialMantenimiento">Test1</a></li>
+					<li><a class="btn btn-info" href="/voucher">Test2</a></li>
+				{% endif %}
+				{% if request.user.is_authenticated %}
+					<li><a class="btn btn-primary" href="/reservas">Test3</a></li>
+					<li><a class="btn btn-inverse" href="/logout">Cerrar sesión</a></li>
+				{% else %}
+					<li><a class="btn btn-success"href="/registro">Regístrate</a></li>
+				{% endif %}
+			</nav>
+		</div>
+		{% block contenido %}{% endblock %}
+		{% block footer %}
+		{% endblock %}
+	</body>
+</html>
